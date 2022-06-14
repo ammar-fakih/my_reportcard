@@ -216,7 +216,7 @@ function populateStudentInfo(studentInformationObject) {
  */
 function addReportCardHeaders(reportCardTableElement) {
   // update the code here
-  reportCardTableElement.innerHTML += `<div class="table-header">
+  reportCardTableElement.innerHTML += `<div class="table-row table-header">
   <h4>Code</h4>
   <h4>Name</h4>
   <h4>Semester</h4>
@@ -296,12 +296,7 @@ function closeDropdown(dropdownElement) {
 }
 
 function openDropdown(dropdownElement) {
-  if (dropdownElement.classList.contains("closed")) {
-    dropdownElement.classList.remove('closed');
-  } else {
-    closeDropdown(dropdownElement);
-  }
-  
+  dropdownElement.classList.remove('closed');
 }
 
 /**
@@ -310,7 +305,7 @@ function openDropdown(dropdownElement) {
  *
  */
 function updateDropdownLabel() {
-  // code goes here
+  semesterDropDownLabelEl.innerHTML = semester;
 }
 
 /**
@@ -331,9 +326,25 @@ function addEventListeners(
   // Each callback function one should update the `semester` variable,
   // call the `updateReportCard` function, and close the dropdown
 
-  dropdownButtonElement.addEventListener("click", () => {
+  dropdownButtonElement.addEventListener('click', () => {
     openDropdown(dropdownElement);
-  })
+  });
+
+  fallSemesterElement.addEventListener('click', () => {
+    semester = 'Fall Semester';
+    updateReportCard(reportCardTableElement, 'Fall Semester');
+    closeDropdown(fallSemesterDropDownEl);
+  });
+  springSemesterElement.addEventListener('click', () => {
+    semester = 'Spring Semester';
+    updateReportCard(reportCardTableElement, 'Spring Semester');
+    closeDropdown(springSemesterDropDownEl);
+  });
+  winterTermElement.addEventListener('click', () => {
+    semester = 'Winter Term';
+    updateReportCard(reportCardTableElement, 'Winter Term');
+    closeDropdown(winterSemesterDropDownEl);
+  });
 }
 
 /***************
@@ -374,4 +385,12 @@ window.onload = function () {
   // execute your functions here to make sure they run as soon as the page loads
   populateStudentInfo(studentInformation);
   updateReportCard(studentData['Spring Semester']);
+  addEventListeners(
+    dropdownEl,
+    dropdownButtonElement,
+    reportCardTableEl,
+    fallSemesterDropDownEl,
+    springSemesterDropDownEl,
+    winterSemesterDropDownEl
+  );
 };
